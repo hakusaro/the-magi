@@ -62,5 +62,29 @@ def crawl_now
   puts "Crawl run ok."
 end
 
+def calculate_platinums
+
+  divisions = ['open', 'all-service']
+
+  divisions.each do |division|
+    score_count = Score.where({:division => division}).count
+
+    scores = Score.where({:division => division}).sort(:total_score.desc)
+
+    plat_slots = (score_count * 0.3).round(0)
+    plat_slots_save = plat_slots
+    scores.each do |score|
+      if plat_slots > 0 
+        score.platinum = true
+        plat_slots -= 1
+      else
+        score.platinum = false
+      end
+      score.save
+    end
+  end
+  puts "Calculation of platinums ok."
+end
+
 # binding.pry
 

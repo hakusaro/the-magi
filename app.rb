@@ -3,7 +3,7 @@ require_relative 'Score'
 
 class Magi < Sinatra::Base
   get '/:state/:division/?' do
-
+    return erb :error, :locals => {:error => "This page has been disabled, because it contained invalid projection data."}
     unless params[:division] == 'all-service' || params[:division] == 'open'
       return erb :error, :locals => {:error => "Invalid division specified. Must either be 'open' or 'all-service'."}
     end
@@ -41,17 +41,7 @@ class Magi < Sinatra::Base
     scores = Score.where({:division => params[:division]}).sort(:total_score.desc)
 
     plat_slots = (score_count * 0.3).round(0)
-    plat_slots_save = plat_slots
-    scores.each do |score|
-      if plat_slots > 0 
-        score.platinum = true
-        plat_slots -= 1
-      else
-        score.platinum = false
-      end
-      score.save
-    end
-    erb :div_platinum, :locals => {:plat_slots => plat_slots_save, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
+    erb :div_platinum, :locals => {:plat_slots => plat_slots, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
   end
 
   get '/' do
