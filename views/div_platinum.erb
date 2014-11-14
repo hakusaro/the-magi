@@ -1,0 +1,98 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jump | The Magi</title>
+    <link rel="stylesheet" href="/css/foundation.css" />
+    <script src="/js/vendor/modernizr.js"></script>
+  </head>
+  <body>
+    
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>Jump<sup>β</sup> > The Magi <small>Platinum Projections</small></h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="panel">
+          <h4>Projection Information</h4>
+          <ul>
+            <li>Division: <%= division == 'open' ? 'Open' : 'All Service' %></li>
+            <li>Platinum slots: <%= plat_slots %></li>
+            <li>Teams: <%= teams %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="panel">
+          <h4>Information</h4>
+          <ol>
+            <li>Click on a table header to sort by that column.</li>
+            <li>Teams are judged to be in the top 30% of the nation to go to the platinum bracket (based on round one and two combined).</li>
+            <li>This service is <strong>not an official CyberPatriot service and is not endorsed nor supported by CPOC.</strong> Do not inquire to CPOC about the behavior of this service.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <table style="margin-left: auto; margin-right: auto; text-align: center" id="scoreTable" class="tablesorter">
+          <thead>
+            <tr>
+              <th>Team ID</th>
+              <th>State</th>
+              <th>Total Score</th>
+              <th>Round 1 Score</th>
+              <th>Round 2 Score</th>
+              <th>Platinum?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%=
+              out = ""
+              scores.each do |score|
+                out += "<tr>"
+                out += "<td>#{score.team_id}</td>"
+                out += "<td>#{score.state}</td>"
+                out += "<td>#{score.total_score}</td>"
+                out += "<td>#{score.r1_score}</td>"
+                out += "<td>#{score.r2_score}</td>"
+                out += "<td>#{score.platinum ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "</tr>"
+              end
+              out
+            %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <p style="text-align: center">Powered by Jump<sup>β</sup>.<br />Release under executive authority only.<br />© 2014 Nyx Studios, LLC.</p>
+      </div>
+    </div>
+    
+    <script src="/js/vendor/jquery.js"></script>
+    <script src="/js/vendor/jquery.tablesorter.min.js"></script>
+    <script src="/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      $(document).ready(function() 
+          { 
+              $("#scoreTable").tablesorter(); 
+          } 
+      ); 
+    </script>
+  </body>
+</html>

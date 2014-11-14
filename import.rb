@@ -7,6 +7,7 @@ File.readlines('as_round1_scores.txt').each do |line|
   score = Score.new({
     :team_id => line_parsed[0],
     :r1_score => line_parsed[1],
+    :total_score => line_parsed[1],
     :division => 'all-service'
   })
   if score.save
@@ -21,6 +22,7 @@ File.readlines('open_round1_scores.txt').each do |line|
   score = Score.new({
     :team_id => line_parsed[0],
     :r1_score => line_parsed[1],
+    :total_score => line_parsed[1],
     :division => 'open'
   })
   if score.save
