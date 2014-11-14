@@ -17,4 +17,5 @@ class Score
   Score.ensure_index(:team_id)
   Score.ensure_index(:state)
   Score.ensure_index(:division)
+  timestamps!
 end
