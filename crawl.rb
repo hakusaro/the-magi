@@ -32,12 +32,13 @@ def crawl_now
       new_score = Score.new({
         :team_id => team_score[:id],
         :division => team_score[:division],
-        :r1_score => nil,
+        :r1_score => 0,
         :r2_score => team_score[:score],
         :time => team_score[:time],
         :warnings => team_score[:warnings],
         :images => team_score[:images],
-        :state => team_score[:state]
+        :state => team_score[:state],
+        :total_score => team_score[:score]
       })
       if new_score.save
         puts "Created a new team #{team_score[:id]} in #{team_score[:division]}."
@@ -50,6 +51,7 @@ def crawl_now
       score.time = team_score[:time]
       score.r2_score = team_score[:score]
       score.warnings = team_score[:warnings]
+      score.total_score = score.r1_score == nil ? team_score[:score] : team_score[:score] + score.r1_score
       if (score.save)
         # puts "Team is #{team_score[:id]}. They're at #{team_score[:score]} in #{team_score[:state]}'s #{team_score[:division]} division."
       else

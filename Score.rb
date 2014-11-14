@@ -7,11 +7,13 @@ class Score
   key :team_id, String, :unique => true
   key :r1_score, Integer
   key :r2_score, Integer
+  key :total_score, Integer
   key :division, String
   key :state, String
   key :images, Integer
   key :time, String
   key :warnings, String
+  key :platinum, Boolean
 
   Score.ensure_index(:team_id)
   Score.ensure_index(:state)
