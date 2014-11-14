@@ -5,11 +5,15 @@ require 'mongo_mapper'
 require_relative 'Score'
 MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
 
-@document = Nokogiri::HTML(open("http://54.243.195.23/"))
+begin
+  @document = Nokogiri::HTML(open("http://54.243.195.23/"))
+rescue
+  abort "Failed to connect to CCS's live output system."
+end
 @nodeset = @document.css("tr.clickable") # @document.xpath("//tr")
 
 @nodeset.each do |row|
-  if row.children[0].children[0].to_s == "CPOC"
+  if row.children[0].children[0].to_s == "CPOC" # CPOC is the CyberPatriot Operation Center
     next
   end
   team_score = {
@@ -51,7 +55,6 @@ MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
       puts "Failed to save #{team_score[:id]}."
     end
   end
-
 end
 
 # binding.pry
