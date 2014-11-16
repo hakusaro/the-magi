@@ -9,7 +9,8 @@ def crawl_now
   begin
     @document = Nokogiri::HTML(open("http://54.243.195.23/"))
   rescue
-    abort "Failed to connect to CCS's live output system."
+    puts "Failed to connect to CCS's live output system."
+    return nil
   end
   @nodeset = @document.css("tr.clickable") # @document.xpath("//tr")
 
