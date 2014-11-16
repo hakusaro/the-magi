@@ -97,6 +97,23 @@ def calculate_platinums
         score.platinum = false
       end
 
+      if score.warnings != nil
+        if score.warnings.include?('M')
+          score.warned_multi = true
+        else
+          score.warned_multi = false
+        end
+
+        if score.warnings.include?('T')
+          score.warned_time = true
+        else
+          score.warned_time = false
+        end
+      else
+        score.warned_multi = false
+        score.warned_time = false
+      end
+
       score.save
     end
   end

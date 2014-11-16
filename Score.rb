@@ -14,7 +14,8 @@ class Score
   key :time, String
   key :warnings, String
   key :platinum, Boolean
-
+  key :warned_time, Boolean
+  key :warned_multi, Boolean
   Score.ensure_index(:team_id)
   Score.ensure_index(:state)
   Score.ensure_index(:division)
