@@ -1,7 +1,8 @@
 require_relative 'crawl'
 
 while true
-  crawl_now
-  calculate_platinums
+  unless crawl_now == nil
+  	calculate_platinums
+  end
   sleep 60
 end
