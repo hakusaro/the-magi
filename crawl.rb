@@ -27,12 +27,22 @@ def crawl_now
       :score => row.children[5].children[0].to_s.to_i,
       :warnings => row.children[6].children[0].to_s
     }
+
+    division = team_score[:division].downcase
+
+    if division.include?('open')
+      division = 'open'
+    elsif division.include?('service')
+      division = 'all-service'
+    elsif division.include?('middle')
+      division = 'ms'
+    end
+
     score = Score.where({:team_id => team_score[:id]}).first
     if (score == nil)
-      team_score[:division] = team_score[:division].downcase.include?('open') ? 'open' : 'all-service'
       new_score = Score.new({
         :team_id => team_score[:id],
-        :division => team_score[:division],
+        :division => division,
         :r1_score => 0,
         :r2_score => team_score[:score],
         :time => team_score[:time],
@@ -47,6 +57,10 @@ def crawl_now
         puts "Failed to create new team #{team_score[:id]}"
       end
     else
+      if score.division != division
+        puts "Redefined #{score.team_id} from division #{score.division} to #{division}."
+      end
+      score.division = division
       score.state = team_score[:state]
       score.images = team_score[:images]
       score.time = team_score[:time]
