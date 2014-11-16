@@ -58,6 +58,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   bson_ext
   bundler
   mongo_mapper

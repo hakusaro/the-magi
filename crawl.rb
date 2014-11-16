@@ -75,6 +75,7 @@ def crawl_now
     end
   end
   puts "Crawl run ok."
+  return true
 end
 
 def calculate_platinums
@@ -95,6 +96,7 @@ def calculate_platinums
       else
         score.platinum = false
       end
+
       score.save
     end
   end

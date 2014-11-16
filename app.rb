@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'active_support/core_ext'
 require_relative 'Score'
 
 class Magi < Sinatra::Base
@@ -17,7 +18,8 @@ class Magi < Sinatra::Base
     scores = Score.where({:division => params[:division]}).sort(:total_score.desc)
 
     plat_slots = (score_count * 0.3).round(0)
-    erb :div_platinum, :locals => {:plat_slots => plat_slots, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
+    last_update = Score.where({:division => params[:division]}).first.updated_at
+    erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
   end
 
   get '/' do
@@ -34,8 +36,8 @@ class Magi < Sinatra::Base
     if scores.count == 0
       return erb :error, :locals => {:error => "Invalid team ID specified. Team must be a fully qualified ID, e.g. 07-0152."}
     end
-
-    erb :team, :locals => {:scores => scores, :division => scores.first.division, :state => scores.first.state}
+    last_update = Score.where({:team_id => params[:teamid]}).first.updated_at
+    erb :team, :locals => {:scores => scores, :division => scores.first.division, :state => scores.first.state, :last_update => last_update}
   end
 
   get '/teams/:teamids/?' do
@@ -57,6 +59,7 @@ class Magi < Sinatra::Base
       return erb :error, :locals => {:error => "Invalid team IDs specified. Teams must be fully qualified, e.g. 07-0152,06-0238, etc."}
     end
 
-    erb :teams, :locals => {:teams => teams}
+    last_update = teams[0].updated_at
+    erb :teams, :locals => {:teams => teams, :last_update => last_update}
   end
 end
