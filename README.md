@@ -2,6 +2,8 @@
 
 The Magi is a score scraper for the CyberPatriot Competition System. CyberPatriot has, in recent years, published a live score page with the current, real time score information from each competition round. This is useful, and beneficial for a variety of reasons, but it never includes the previous round scores, nor does it immediately make clear who will advance to subsequent rounds, and thus, to the National Finals competition. This script does just that.
 
+Historical note: This is the next-generation version of the scraper that I operated during CyberPatriot 6. For historical purposes, I've uploaded [that script](https://github.com/nicatronTg/cp.shanked.me) to Github.
+
 ### Setting up
 
 To set up The Magi, it's important to note that several things must be changed per round. Because the advancement rules change per season, and per round, calculating those who advance must be changed per round. In addition, minor tweaks to the HTML layout of the score engine and the actual score engine URL will also need to be accounted for before scraping will operate successfully.
