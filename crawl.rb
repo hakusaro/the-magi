@@ -90,6 +90,8 @@ def calculate_state_rank
     locations.push(line.strip!)
   end
 
+  # Calculate top ranked teams.
+
   locations.each do |location|
     divisions.each do |division|
       tiers.each do |tier|
@@ -102,14 +104,12 @@ def calculate_state_rank
         rank = 1
         scores.each do |score|
           score.top3 = false
-          if tier == 'Platinum'
-            if advancement > 0
-              score.top3 = true
-            else
-              score.top3 = false
-            end
-            advancement -= 1
+          if advancement > 0
+            score.top3 = true
+          else
+            score.top3 = false
           end
+          advancement -= 1
 
           score.state_rank = rank
           rank += 1

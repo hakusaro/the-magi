@@ -21,10 +21,10 @@
           <thead>
             <tr>
               <th>Team ID</th>
-              <th>State Round Score</th>
               <th>Tier</th>
-              <th>State Rank</th>
-              <th>Top 3 in Platinum?</th>
+              <th>Score</th>
+              <th>State Rank in Tier</th>
+              <th>Top 3 in Tier?</th>
             </tr>
           </thead>
           <tbody>
@@ -33,8 +33,8 @@
               scores.each do |score|
                 out += "<tr>"
                 out += "<td>#{score.team_id} #{score.warned_multi ? '<img src=\'\img\error.png\'/>' : ''}#{score.warned_time ? '<img src=\'\img\clock.png\' />' : ''}</td>"
-                out += "<td>#{score.r3_score}</td>"
                 out += "<td>#{score.tier}</td>"
+                out += "<td>#{score.r3_score}</td>"
                 out += "<td>#{score.state_rank}</td>"
                 out += "<td>#{score.top3 ? '<strong>Yes</strong>' : 'No'}</td>"
                 out += "</tr>"

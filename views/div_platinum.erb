@@ -34,8 +34,8 @@
           <h4>Information</h4>
           <ol>
             <li>Click on a table header to sort by that column.</li>
-            <li>The top 3 teams (in platinum) per state advance to the regional competition round.</li>
-            <li>Teams listed here do not include Cisco Networking Challenge / Quiz / Packet Tracer scores. Those scores are not public</li>
+            <li>The top 3 teams (in platinum) per state advance to the regional competition round. Only platinum teams can progress to Nationals from that round.</li>
+            <li>Teams listed here do not include Cisco Networking Challenge / Quiz / Packet Tracer scores. Those scores are not public.</li>
             <li><img src="\img\clock.png" /> = Official CyberPatriot warning that competition time has been exceeded.</li>
             <li><img src="\img\error.png" /> = Official CyberPatriot warning that multiple instances of the same image were open simultaneously.</li>
             <li>This service is <strong>not an official CyberPatriot service and is not endorsed nor supported by CPOC.</strong> Do not inquire to CPOC about the behavior of this service.</li>
@@ -57,10 +57,10 @@
             <tr>
               <th>Team ID</th>
               <th>State</th>
-              <th>State Round Score</th>
               <th>Tier</th>
-              <th>State Rank</th>
-              <th>Top 3 in Platinum?</th>
+              <th>Score</th>
+              <th>State Rank in Tier</th>
+              <th>Top 3 in Tier?</th>
             </tr>
           </thead>
           <tbody>
@@ -70,8 +70,8 @@
                 out += "<tr>"
                 out += "<td>#{score.team_id} #{score.warned_multi ? '<img src=\'\img\error.png\' />' : ''}#{score.warned_time ? '<img src=\'\img\clock.png\' />' : ''}</td>"
                 out += "<td>#{score.state}</td>"
-                out += "<td>#{score.r3_score}</td>"
                 out += "<td>#{score.tier}</td>"
+                out += "<td>#{score.r3_score}</td>"
                 out += "<td>#{score.state_rank}</td>"
                 out += "<td>#{score.top3 ? '<strong>Yes</strong>' : 'No'}</td>"
                 out += "</tr>"
