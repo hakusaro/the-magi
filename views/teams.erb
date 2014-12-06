@@ -11,7 +11,7 @@
     
     <div class="row">
       <div class="large-12 columns">
-        <h1>Jump<sup>β</sup> > The Magi <small>Platinum Projections</small></h1>
+        <h1>Jump<sup>β</sup> > The Magi <small>State Advancement Projections</small></h1>
       </div>
     </div>
 
@@ -21,10 +21,10 @@
           <thead>
             <tr>
               <th>Team ID</th>
-              <th>Total Score</th>
-              <th>Round 1 Score</th>
-              <th>Round 2 Score</th>
-              <th>Platinum?</th>
+              <th>State Round Score</th>
+              <th>Tier</th>
+              <th>State Tier Rank</th>
+              <th>Top 3 in Platinum?</th>
             </tr>
           </thead>
           <tbody>
@@ -33,10 +33,10 @@
               teams.each do |score|
                 out += "<tr>"
                 out += "<td>#{score.team_id} #{score.warned_multi ? '<img src=\'\img\error.png\'/>' : ''}#{score.warned_time ? '<img src=\'\img\clock.png\' />' : ''}</td>"
-                out += "<td>#{score.total_score}</td>"
-                out += "<td>#{score.r1_score}</td>"
-                out += "<td>#{score.r2_score}</td>"
-                out += "<td>#{score.platinum ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.r3_score}</td>"
+                out += "<td>#{score.tier}</td>"
+                out += "<td>#{score.state_rank}</td>"
+                out += "<td>#{score.top3 ? '<strong>Yes</strong>' : 'No'}</td>"
                 out += "</tr>"
               end
               out

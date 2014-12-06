@@ -101,12 +101,15 @@ def calculate_state_rank
         advancement = 3
         rank = 1
         scores.each do |score|
-          if advancement > 0
-            score.top3 = true
-          else
-            score.top3 = false
+          score.top3 = false
+          if tier == 'Platinum'
+            if advancement > 0
+              score.top3 = true
+            else
+              score.top3 = false
+            end
+            advancement -= 1
           end
-          advancement -= 1
 
           score.state_rank = rank
           rank += 1
