@@ -8,17 +8,7 @@ class Magi < Sinatra::Base
     redirect to('/teams/07-0152,07-0327,07-1260,07-1262,07-1964,07-0158,07-0639,07-1818')
   end
 
-  get '/:state/:division/?' do
-    score_count = Score.where({:division => params[:division], :state => params[:state]}).count
 
-    if score_count == 0
-      return erb :error, :locals => {:error => 'Invalid state / division combo specified. No data found.'}
-    end
-
-    teams = Score.where({:division => params[:division], :state => params[:state]}).sort(:r3_score.desc)
-
-    erb :teams, :locals => {:teams => teams}
-  end
 
   get '/:division/?' do
     unless params[:division] == 'all-service' || params[:division] == 'open'
@@ -73,5 +63,17 @@ class Magi < Sinatra::Base
 
     last_update = teams[0].updated_at
     erb :teams, :locals => {:teams => teams, :last_update => last_update}
+  end
+
+  get '/:state/:division/?' do
+    score_count = Score.where({:division => params[:division], :state => params[:state]}).count
+
+    if score_count == 0
+      return erb :error, :locals => {:error => 'Invalid state / division combo specified. No data found.'}
+    end
+
+    teams = Score.where({:division => params[:division], :state => params[:state]}).sort(:r3_score.desc)
+
+    erb :teams, :locals => {:teams => teams}
   end
 end
