@@ -72,7 +72,7 @@ def crawl_now
       score.total_score = team_score[:score]
       score.tier = team_score[:tier]
       if (score.save)
-        puts "Team is #{team_score[:id]}. They're at #{team_score[:score]} in #{team_score[:state]}'s #{team_score[:division]} (#{team_score[:tier]}) division."
+        # puts "Team is #{team_score[:id]}. They're at #{team_score[:score]} in #{team_score[:state]}'s #{team_score[:division]} (#{team_score[:tier]}) division."
       else
         puts "Failed to save #{team_score[:id]}."
       end
@@ -95,7 +95,7 @@ def calculate_state_rank
       tiers.each do |tier|
         
         score_count = Score.where({:division => division, :state => location, :tier => tier}).count
-        puts "Calculating #{location} / #{division} / #{tier} (#{score_count} teams)."
+        # puts "Calculating #{location} / #{division} / #{tier} (#{score_count} teams)."
         scores = Score.where({:division => division, :state => location, :tier => tier}).sort(:r3_score.desc)
 
         advancement = 3
@@ -135,6 +135,7 @@ def calculate_state_rank
     end
   end
 
+  puts "Calculation of state ranks ok."
 
 end
 
