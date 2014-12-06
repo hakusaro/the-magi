@@ -8,7 +8,9 @@ class Magi < Sinatra::Base
     redirect to('/teams/07-0152,07-0327,07-1260,07-1262,07-1964,07-0158,07-0639,07-1818')
   end
 
-
+  get '/lchs/?' do
+    redirect to('/teams/07-1889,07-0940,07-0692,07-1887')
+  end
 
   get '/:division/?' do
     unless params[:division] == 'all-service' || params[:division] == 'open'
