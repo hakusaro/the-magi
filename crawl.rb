@@ -136,6 +136,25 @@ def calculate_state_rank
         end
       end
     end
+
+    # Calculate remaining wildcard teams
+
+    divisions.each do |division|
+      tiers.each do |tier|
+        wildcards = 12
+        scores = Score.where({:division => division, :tier => tier}).sort(:r3_score.desc)
+        scores.each do |score|
+          if wildcards == 0
+            break
+          end
+          if wildcards > 0 && score.top3 == false
+            score.wildcard = true
+            wildcards -= 1
+            score.save
+          end
+        end
+      end
+    end
   end
 
   puts "Calculation of state ranks ok."

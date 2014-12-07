@@ -25,6 +25,7 @@
               <th>Score</th>
               <th>State Rank in Tier</th>
               <th>Top 3 in Tier?</th>
+              <th>Wildcard?</th>
             </tr>
           </thead>
           <tbody>
@@ -37,6 +38,7 @@
                 out += "<td>#{score.r3_score}</td>"
                 out += "<td>#{score.state_rank}</td>"
                 out += "<td>#{score.top3 ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.wildcard ? '<strong>Yes</strong>' : 'No'}</td>"
                 out += "</tr>"
               end
               out

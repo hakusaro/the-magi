@@ -1,8 +1,18 @@
+require 'benchmark'
 require_relative 'crawl'
 
-while true
-  unless crawl_now == nil
-  	calculate_state_rank
+class Crawler
+  def crawl
+    while true
+      @@recalculate = false
+      puts Benchmark.measure { @@recalculate = crawl_now }
+      if @@recalculate == true
+        puts Benchmark.measure { calculate_state_rank }
+      end
+      recalculate = false
+      sleep 60
+    end
   end
-  sleep 60
 end
+
+Crawler.new.crawl
