@@ -109,6 +109,7 @@ def calculate_state_rank
             score.warned_time = false
             score.top3 = false
             score.wildcard = false
+            score.state_rank = nil
             score.save
             next
           end
