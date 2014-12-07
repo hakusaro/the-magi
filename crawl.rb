@@ -156,13 +156,13 @@ def calculate_state_rank
           if wildcards == 0
             break
           end
-          if score.r3_score == 0 || score.r3_score == nil
+          if (score.r3_score == 0 || score.r3_score == nil)
             score.top3 = false
             score.wildcard = false
             score.save
             next
           end
-          if wildcards > 0 && score.top3 == false
+          if (wildcards > 0 && score.top3 == false)
             score.wildcard = true
             wildcards -= 1
             score.save
