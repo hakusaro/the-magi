@@ -104,6 +104,14 @@ def calculate_state_rank
         rank = 1
         scores.each do |score|
           score.top3 = false
+          if score.r3_score == 0 || score.r3_score == nil
+            score.warned_multi = false
+            score.warned_time = false
+            score.top3 = false
+            score.wildcard = false
+            score.save
+            next
+          end
           if advancement > 0
             score.top3 = true
           else
@@ -146,6 +154,12 @@ def calculate_state_rank
         scores.each do |score|
           if wildcards == 0
             break
+          end
+          if score.r3_score == 0 || score.r3_score == nil
+            score.top3 = false
+            score.wildcard = false
+            score.save
+            next
           end
           if wildcards > 0 && score.top3 == false
             score.wildcard = true
