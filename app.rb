@@ -12,6 +12,10 @@ class Magi < Sinatra::Base
     redirect to('/teams/07-1889,07-0940,07-0692,07-1887')
   end
 
+  get '/cchs/?' do
+    redirect to('/teams/07-1863,07-2427,07-1864,07-1975')
+  end
+
   get '/:division/?' do
     unless params[:division] == 'all-service' || params[:division] == 'open'
       return erb :error, :locals => {:error => "Invalid division specified. Must either be 'open' or 'all-service'."}
