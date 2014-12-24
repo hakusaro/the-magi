@@ -21,6 +21,7 @@ class Score
   key :warned_time, Boolean
   key :warned_multi, Boolean
   key :tier, String
+  key :state_finalist, Boolean
   Score.ensure_index(:team_id)
   Score.ensure_index(:state)
   Score.ensure_index(:division)

@@ -1,24 +1,23 @@
 require_relative 'Score'
 
-projected_plat = Score.where({:division => 'open', :platinum => true}).count
-actual_plat = Score.where({:division => 'open', :tier => 'Platinum'}).count
-open_total = Score.where({:division => 'open'}).count
+match_advancement = Score.where({:division => 'open', :top3 => true, :state_finalist => true}).count
+  + Score.where({:division => 'open', :wildcard => true, :state_finalist => true}).count
 
-puts "We projected #{projected_plat} slots, but actually have #{actual_plat} slots."
-puts "Actual % of total: #{actual_plat.to_f / open_total.to_f * 100}."
+total_advancement = Score.where({:division => 'open', :state_finalist => true}).count
 
-match_plat = Score.where({:division => 'open', :platinum => true, :tier => 'Platinum'}).count
+puts "We matched #{match_advancement} advanecment slots (out of #{total_advancement} advancing slots)."
+puts "%error: #{((total_advancement.to_f - match_advancement.to_f) / total_advancement.to_f * 100)}%"
 
-puts "We matched #{match_plat} platinum slots."
+promoted = Score.where({:division => 'open', :top3 => false, :wildcard => false, :state_finalist => true}).count
 
-promoted = Score.where({:division => 'open', :platinum => false, :tier => 'Platinum'}).count
+puts "CPOC promoted #{promoted} teams that we didn't predict."
 
-puts "CPOC promoted #{promoted} teams into platinum that we didn't predict."
+top3_demoted = Score.where({:division => 'open', :top3 => true, :state_finalist => false}).count
 
-demoted = Score.where({:division => 'open', :platinum => true, :tier => 'Gold'}).count +
-  Score.where({:division => 'open', :platinum => true, :tier => 'Silver'}).count
+wildcard_demoted = Score.where({:division => 'open', :wildcard => true, :state_finalist => false}).count
 
-far_demoted = Score.where({:division => 'open', :platinum => true, :tier => 'Silver'}).count
+demoted = top3_demoted + wildcard_demoted
 
-puts "CPOC demoted #{demoted} from our projections to gold or silver (#{demoted - far_demoted} to gold)."
-puts "CPOC demoted #{far_demoted} from our projected platinums to silver!"
+puts "CPOC demoted #{demoted} from our projections."
+puts "CPOC demoted #{top3_demoted} top3 teams from our projections."
+puts "CPOC demoted #{wildcard_demoted} wildcard teams from our projections."
