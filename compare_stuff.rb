@@ -1,7 +1,6 @@
 require_relative 'Score'
 
 match_advancement = Score.where({:division => 'open', :top3 => true, :state_finalist => true}).count
-  + Score.where({:division => 'open', :wildcard => true, :state_finalist => true}).count
 
 total_advancement = Score.where({:division => 'open', :state_finalist => true}).count
 
@@ -14,10 +13,7 @@ puts "CPOC promoted #{promoted} teams that we didn't predict."
 
 top3_demoted = Score.where({:division => 'open', :top3 => true, :state_finalist => false}).count
 
-wildcard_demoted = Score.where({:division => 'open', :wildcard => true, :state_finalist => false}).count
-
-demoted = top3_demoted + wildcard_demoted
+demoted = top3_demoted
 
 puts "CPOC demoted #{demoted} from our projections."
 puts "CPOC demoted #{top3_demoted} top3 teams from our projections."
-puts "CPOC demoted #{wildcard_demoted} wildcard teams from our projections."
