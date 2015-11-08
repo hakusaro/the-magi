@@ -9,7 +9,7 @@ MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
 
 def crawl_now
   begin
-    @document = Nokogiri::HTML(open("http://54.243.195.23/"))
+    @document = Nokogiri::HTML(open("http://scoreboard.uscyberpatriot.org/"))
   rescue
     puts "Failed to connect to CCS's live output system."
     return nil
