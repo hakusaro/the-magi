@@ -46,9 +46,9 @@ def crawl_now
       new_score = Score.new({
         :team_id => team_score[:id],
         :division => division,
-        :r1_score => 0,
+        :r1_score => team_score[:score],
         :r2_score => 0,
-        :r3_score => team_score[:score],
+        :r3_score => 0,
         :time => team_score[:time],
         :warnings => team_score[:warnings],
         :images => team_score[:images],

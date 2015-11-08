@@ -27,7 +27,8 @@ class Magi < Sinatra::Base
     scores = Score.where({:division => params[:division]}).sort(:r3_score.desc)
 
     plat_slots = (score_count * 0.3).round(0)
-    last_update = Score.where({:division => params[:division], :tier => 'Platinum', :state => 'CO'}).first.updated_at
+    # last_update = Score.where({:division => params[:division], :tier => 'Platinum', :state => 'CO'}).first.updated_at
+    last_update = "Never" if last_update == nil
     erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
   end
 
