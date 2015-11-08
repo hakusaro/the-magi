@@ -2,6 +2,8 @@ require 'nokogiri'
 require 'open-uri'
 require 'pry'
 require 'mongo_mapper'
+require 'active_support'
+require 'active_support/core_ext'
 require_relative 'Score'
 MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
 

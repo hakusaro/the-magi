@@ -1,3 +1,5 @@
+require 'active_support'
+require 'active_support/core_ext'
 require 'mongo_mapper'
 MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
 
