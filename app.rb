@@ -17,6 +17,16 @@ class Magi < Sinatra::Base
     redirect to('/teams/07-1863,07-2427,07-1864,07-1975')
   end
 
+  get '/all/?' do
+    score_count = Score.all.count
+
+    scores = Score.sort(:r1_score.desc)
+
+    plat_slots = 0
+    last_update = Score.where({:team_id => "CPOC"}).first.updated_at
+    erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :scores => scores, :teams => score_count, :division => "N/A", :state => params[:state]}
+  end
+
   get '/:division/?' do
     unless params[:division] == 'all-service' || params[:division] == 'open'
       return erb :error, :locals => {:error => "Invalid division specified. Must either be 'open' or 'all-service'."}
@@ -32,8 +42,9 @@ class Magi < Sinatra::Base
     erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
   end
 
+
   get '/' do
-    redirect to ('/open')
+    redirect to ('/all/')
   end
 
   configure do

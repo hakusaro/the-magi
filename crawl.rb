@@ -18,28 +18,30 @@ def crawl_now
 
   @nodeset.each do |row|
     if row.children[0].children[0].to_s.include? "CPOC" # CPOC is the CyberPatriot Operation Center (CPOC, CPOC_gol, CPOC_pla, CPOC_sil)
-      next
+      # next
     end
     team_score = {
       :id => row.children[0].children[0].to_s, 
-      :division => row.children[1].children[0].to_s, 
-      :state => row.children[2].children[0].to_s,
-      :images => row.children[4].children[0].to_s.to_i,
-      :time => row.children[5].children[0].to_s,
-      :score => row.children[6].children[0].to_s.to_i,
-      :warnings => row.children[7].children[0].to_s,
-      :tier => row.children[3].children[0].to_s
+      :division => nil, 
+      :state => nil,
+      :images => row.children[1].children[0].to_s.to_i,
+      :time => row.children[2].children[0].to_s,
+      :score => row.children[3].children[0].to_s.to_i,
+      :warnings => row.children[4].children[0].to_s,
+      :tier => nil
     }
 
-    division = team_score[:division].downcase
+    # division = team_score[:division].downcase
 
-    if division.include?('open')
-      division = 'open'
-    elsif division.include?('service')
-      division = 'all-service'
-    elsif division.include?('middle')
-      division = 'ms'
-    end
+    # if division.include?('open')
+    #   division = 'open'
+    # elsif division.include?('service')
+    #   division = 'all-service'
+    # elsif division.include?('middle')
+    #   division = 'ms'
+    # end
+
+    division = nil
 
     score = Score.where({:team_id => team_score[:id]}).first
     if (score == nil)
