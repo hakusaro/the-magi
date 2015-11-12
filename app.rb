@@ -6,15 +6,7 @@ require_relative 'Score'
 class Magi < Sinatra::Base
 
   get '/rhs/?' do
-    redirect to('/teams/07-0152,07-0327,07-1260,07-1262,07-1964,07-0158,07-0639,07-1818')
-  end
-
-  get '/lchs/?' do
-    redirect to('/teams/07-1889,07-0940,07-0692,07-1887')
-  end
-
-  get '/cchs/?' do
-    redirect to('/teams/07-1863,07-2427,07-1864,07-1975')
+    redirect to('/teams/08-0001,08-0002,08-0003,08-0004,08-0005')
   end
 
   get '/all/?' do
@@ -37,9 +29,10 @@ class Magi < Sinatra::Base
     scores = Score.where({:division => params[:division]}).sort(:r3_score.desc)
 
     plat_slots = (score_count * 0.3).round(0)
+    mst50_slots = (score_count * 0.5).round(0)
     last_update = Score.where({:team_id => "CPOC"}).first.updated_at
 
-    erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
+    erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :mst50_slots => mst50_slots, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
   end
 
 

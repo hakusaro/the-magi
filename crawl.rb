@@ -218,6 +218,43 @@ def calculate_platinums
     end
   end
   puts "Calculation of platinums ok."
+
+  score_count = Score.where({:division => 'ms'}).count
+
+  scores = Score.where({:division => 'ms'}).sort(:total_score.desc)
+
+  mst50_slots = (score_count * 0.5).round(0)
+  mst50_slots_save = mst50_slots
+
+  scores.each do |score|
+    if mst50_slots > 0
+      score.mst50 = true
+      mst50_slots -= 1
+    else
+      score.mst50 = false
+    end
+
+    if score.warnings != nil
+      if score.warnings.include?('M')
+        score.warned_multi = true
+      else
+        score.warned_multi = false
+      end
+
+      if score.warnings.include?('T')
+        score.warned_time = true
+      else
+        score.warned_time = false
+      end
+    else
+      score.warned_multi = false
+      score.warned_time = false
+    end
+
+    score.save
+  end
+
+  puts "Calculation of MST50 ok."
 end
 
 # binding.pry

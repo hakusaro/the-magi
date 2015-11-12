@@ -17,6 +17,7 @@ class Score
   key :time, String
   key :warnings, String
   key :platinum, Boolean
+  key :mst50, Boolean
   key :top3, Boolean
   key :state_rank, Integer
   key :wildcard, Boolean
