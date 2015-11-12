@@ -22,26 +22,24 @@ def crawl_now
     end
     team_score = {
       :id => row.children[0].children[0].to_s, 
-      :division => nil, 
-      :state => nil,
-      :images => row.children[1].children[0].to_s.to_i,
-      :time => row.children[2].children[0].to_s,
-      :score => row.children[3].children[0].to_s.to_i,
-      :warnings => row.children[4].children[0].to_s,
+      :division => row.children[1].children[0].to_s, 
+      :state => row.children[2].children[0].to_s,
+      :images => row.children[3].children[0].to_s.to_i,
+      :time => row.children[4].children[0].to_s,
+      :score => row.children[5].children[0].to_s.to_i,
+      :warnings => row.children[6].children[0].to_s,
       :tier => nil
     }
 
-    # division = team_score[:division].downcase
+    division = team_score[:division].downcase
 
-    # if division.include?('open')
-    #   division = 'open'
-    # elsif division.include?('service')
-    #   division = 'all-service'
-    # elsif division.include?('middle')
-    #   division = 'ms'
-    # end
-
-    division = nil
+    if division.include?('open')
+      division = 'open'
+    elsif division.include?('service')
+      division = 'all-service'
+    elsif division.include?('middle')
+      division = 'ms'
+    end
 
     score = Score.where({:team_id => team_score[:id]}).first
     if (score == nil)
@@ -71,7 +69,7 @@ def crawl_now
       score.state = team_score[:state]
       score.images = team_score[:images]
       score.time = team_score[:time]
-      score.r3_score = team_score[:score]
+      score.r1_score = team_score[:score]
       score.warnings = team_score[:warnings]
       score.total_score = team_score[:score]
       score.tier = team_score[:tier]
