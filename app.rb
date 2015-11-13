@@ -6,7 +6,7 @@ require_relative 'Score'
 class Magi < Sinatra::Base
 
   get '/rhs/?' do
-    redirect to('/teams/08-0001,08-0002,08-0003,08-0004,08-0005')
+    redirect to('/teams/08-0001,08-0002,08-0003,08-0004,08-0005,08-0117,08-0118,08-0119')
   end
 
   get '/all/?' do
