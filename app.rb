@@ -26,7 +26,7 @@ class Magi < Sinatra::Base
 
     score_count = Score.where({:division => params[:division]}).count
 
-    scores = Score.where({:division => params[:division]}).sort(:r3_score.desc)
+    scores = Score.where({:division => params[:division]}).sort(:r1Ï_score.desc)
 
     plat_slots = (score_count * 0.3).round(0)
     mst50_slots = (score_count * 0.5).round(0)
@@ -45,7 +45,7 @@ class Magi < Sinatra::Base
   end
 
   get '/team/:teamid/?' do
-    scores = Score.where({:team_id => params[:teamid]}).sort(:r3_score.desc)
+    scores = Score.where({:team_id => params[:teamid]}).sort(:r1_score.desc)
 
     if scores.count == 0
       return erb :error, :locals => {:error => "Invalid team ID specified. Team must be a fully qualified ID, e.g. 07-0152."}
@@ -62,7 +62,7 @@ class Magi < Sinatra::Base
 
     teams = Array.new
     params[:teamids].split(',').each do |team|
-      sc = Score.where({:team_id => team}).sort(:r3_score.desc).first
+      sc = Score.where({:team_id => team}).sort(:r1_score.desc).first
 
       unless sc == nil
         teams.push(sc)
@@ -84,7 +84,7 @@ class Magi < Sinatra::Base
       return erb :error, :locals => {:error => 'Invalid state / division combo specified. No data found.'}
     end
 
-    teams = Score.where({:division => params[:division], :state => params[:state]}).sort(:r3_score.desc)
+    teams = Score.where({:division => params[:division], :state => params[:state]}).sort(:r1_score.desc)
 
     erb :teams, :locals => {:teams => teams}
   end
