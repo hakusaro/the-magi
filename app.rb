@@ -73,6 +73,8 @@ class Magi < Sinatra::Base
       end
     end
 
+    teams.sort! { |a, b| b.total_score <=> a.total_score }
+
     if teams.count == 0
       return erb :error, :locals => {:error => "Invalid team IDs specified. Teams must be fully qualified, e.g. 07-0152,06-0238, etc."}
     end
