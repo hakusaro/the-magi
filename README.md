@@ -36,6 +36,6 @@ The server has several routes:
 
 ### Name
 
-This script was named after The Magi, a set of three supercomputers in Neon Genesis Evangelion (which were inspired by the biblical magi).
+This script was named after The Magi, a set of three supercomputers in Neon Genesis Evangelion.
 
 ![](http://puu.sh/cR0km/d1cd9064c5.png)
