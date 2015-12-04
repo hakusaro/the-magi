@@ -1,7 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext'
 require 'mongo_mapper'
-require 'pry'
 require_relative 'Score'
 MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
 
@@ -47,7 +46,7 @@ File.readlines('cp8_scores/open_round1.txt').each do |line|
     puts "Created a new team #{line_parsed[0]}."
   end
   if score.save
-    puts "Stored #{line_parsed[0]} from Open at #{line_parsed[1]}."
+    puts "Stored #{line_parsed[0]} from open at #{line_parsed[1]}."
   else
     puts "Failed to save #{line_parsed[0]}."
   end
@@ -70,13 +69,11 @@ File.readlines('cp8_scores/middle_round1.txt').each do |line|
     puts "Created a new team #{line_parsed[0]}."
   end
   if score.save
-    puts "Stored #{line_parsed[0]} from Middle at #{line_parsed[1]}."
+    puts "Stored #{line_parsed[0]} from middle at #{line_parsed[1]}."
   else
     puts "Failed to save #{line_parsed[0]}."
   end
 end
-
-binding.pry
 
 # File.readlines('cp7_r3_advancement_open.txt').each do |line|
 #   line_parsed = line.split ','
