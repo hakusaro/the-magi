@@ -46,8 +46,8 @@ def crawl_now
       new_score = Score.new({
         :team_id => team_score[:id],
         :division => division,
-        :r1_score => team_score[:score],
-        :r2_score => 0,
+        :r1_score => 0,
+        :r2_score => team_score[:score],
         :r3_score => 0,
         :time => team_score[:time],
         :warnings => team_score[:warnings],
@@ -65,13 +65,16 @@ def crawl_now
       if score.division != division
         puts "Redefined #{score.team_id} from division #{score.division} to #{division}."
       end
+      if score.r1_o_score == nil
+        score.r1_o_score = 0
+      end
       score.division = division
       score.state = team_score[:state]
       score.images = team_score[:images]
       score.time = team_score[:time]
-      score.r1_score = team_score[:score]
+      score.r2_score = team_score[:score]
       score.warnings = team_score[:warnings]
-      score.total_score = team_score[:score]
+      score.total_score = score.r1_o_score + score.r2_score
       score.tier = team_score[:tier]
       if (score.save)
         # puts "Team is #{team_score[:id]}. They're at #{team_score[:score]} in #{team_score[:state]}'s #{team_score[:division]} (#{team_score[:tier]}) division."
@@ -107,8 +110,8 @@ def calculate_state_rank
         scores.each do |score|
           score.top3 = false
           if score.r3_score == 0 || score.r3_score == nil
-            score.warned_multi = false
-            score.warned_time = false
+            score.warned_multi_r2 = false
+            score.warned_time_r2 = false
             score.top3 = false
             score.wildcard = false
             score.state_rank = nil
@@ -127,19 +130,19 @@ def calculate_state_rank
 
           if score.warnings != nil
             if score.warnings.include?('M')
-              score.warned_multi = true
+              score.warned_multi_r2 = true
             else
-              score.warned_multi = false
+              score.warned_multi_r2 = false
             end
 
             if score.warnings.include?('T')
-              score.warned_time = true
+              score.warned_time_r2 = true
             else
-              score.warned_time = false
+              score.warned_time_r2 = false
             end
           else
-            score.warned_multi = false
-            score.warned_time = false
+            score.warned_multi_r2 = false
+            score.warned_time_r2 = false
           end
 
           score.save
@@ -180,14 +183,52 @@ end
 
 def calculate_platinums
 
-  divisions = ['open', 'all-service']
+  # Open division
+  score_count = Score.where({:division => 'open'}).count
 
-  divisions.each do |division|
-    score_count = Score.where({:division => division}).count
+  scores = Score.where({:division => 'open'}).sort(:total_score.desc)
 
-    scores = Score.where({:division => division}).sort(:total_score.desc)
+  plat_slots = (score_count * 0.3).round(0)
+  plat_slots_save = plat_slots
+  scores.each do |score|
+    if plat_slots > 0 
+      score.platinum = true
+      plat_slots -= 1
+    else
+      score.platinum = false
+    end
+
+    if score.warnings != nil
+      if score.warnings.include?('M')
+        score.warned_multi_r2 = true
+      else
+        score.warned_multi_r2 = false
+      end
+
+      if score.warnings.include?('T')
+        score.warned_time_r2 = true
+      else
+        score.warned_time_r2 = false
+      end
+    else
+      score.warned_multi_r2 = false
+      score.warned_time_r2 = false
+    end
+
+    score.save
+  end
+
+  # AS division
+
+  categories = ['cap', 'afjrotc', 'mcjrotc', 'ajrotc', 'njrotc', 'nscc']
+
+  categories.each do |category|
+    score_count = Score.where({:state => category}).count
+
+    scores = Score.where({:state => category}).sort(:total_score.desc)
 
     plat_slots = (score_count * 0.3).round(0)
+    puts "Platinum slots in category #{category} is #{plat_slots}"
     plat_slots_save = plat_slots
     scores.each do |score|
       if plat_slots > 0 
@@ -199,24 +240,25 @@ def calculate_platinums
 
       if score.warnings != nil
         if score.warnings.include?('M')
-          score.warned_multi = true
+          score.warned_multi_r2 = true
         else
-          score.warned_multi = false
+          score.warned_multi_r2 = false
         end
 
         if score.warnings.include?('T')
-          score.warned_time = true
+          score.warned_time_r2 = true
         else
-          score.warned_time = false
+          score.warned_time_r2 = false
         end
       else
-        score.warned_multi = false
-        score.warned_time = false
+        score.warned_multi_r2 = false
+        score.warned_time_r2 = false
       end
 
       score.save
     end
   end
+
   puts "Calculation of platinums ok."
 
   score_count = Score.where({:division => 'ms'}).count
@@ -236,19 +278,19 @@ def calculate_platinums
 
     if score.warnings != nil
       if score.warnings.include?('M')
-        score.warned_multi = true
+        score.warned_multi_r2 = true
       else
-        score.warned_multi = false
+        score.warned_multi_r2 = false
       end
 
       if score.warnings.include?('T')
-        score.warned_time = true
+        score.warned_time_r2 = true
       else
-        score.warned_time = false
+        score.warned_time_r2 = false
       end
     else
-      score.warned_multi = false
-      score.warned_time = false
+      score.warned_multi_r2 = false
+      score.warned_time_r2 = false
     end
 
     score.save
