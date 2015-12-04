@@ -1,23 +1,60 @@
 require_relative 'Score'
 
-match_advancement = Score.where({:division => 'open', :top3 => true, :state_finalist => true}).count
-  + Score.where({:division => 'open', :wildcard => true, :state_finalist => true}).count
+score_deltas = {}
 
-total_advancement = Score.where({:division => 'open', :state_finalist => true}).count
+divisions = ['ms', 'all-service', 'open']
 
-puts "We matched #{match_advancement} advanecment slots (out of #{total_advancement} advancing slots)."
-puts "%error: #{((total_advancement.to_f - match_advancement.to_f) / total_advancement.to_f * 100)}%"
+divisions.each do |division|
+  deltas = 0
+  total_score_offsets_positive = 0
+  score_offsets_positive = 0
 
-promoted = Score.where({:division => 'open', :top3 => false, :wildcard => false, :state_finalist => true}).count
+  positive_warn_t = 0
+  positive_warn_m = 0
 
-puts "CPOC promoted #{promoted} teams that we didn't predict."
+  total_score_offsets_negative = 0
+  score_offsets_negative = 0
 
-top3_demoted = Score.where({:division => 'open', :top3 => true, :state_finalist => false}).count
+  negative_warn_t = 0
+  negative_warn_m = 0
 
-wildcard_demoted = Score.where({:division => 'open', :wildcard => true, :state_finalist => false}).count
+  Score.where(division: division).each do |score|
+    if score.r1_score != score.r1_o_score
+      next if score.r1_score == nil
+      next if score.r1_o_score == nil
+      deltas += 1
+      changes = score.r1_o_score - score.r1_score
+      # If positive, CPOC added points back
+      # If negative, CPOC subtracted points
+      if changes < 0
+        total_score_offsets_negative += changes * -1
+        score_offsets_negative += 1
 
-demoted = top3_demoted + wildcard_demoted
+        negative_warn_m += 1 if score.warned_multi
+        negative_warn_t += 1 if score.warned_time
 
-puts "CPOC demoted #{demoted} from our projections."
-puts "CPOC demoted #{top3_demoted} top3 teams from our projections."
-puts "CPOC demoted #{wildcard_demoted} wildcard teams from our projections."
+        puts "Negative offset of #{score.team_id} (time: #{score.time.strip}, m?: #{score.warned_multi}) (scrape: #{score.r1_score}, official: #{score.r1_o_score}): #{changes * -1}"
+      else
+        total_score_offsets_positive += changes
+        score_offsets_positive += 1
+
+        positive_warn_m += 1 if score.warned_multi
+        positive_warn_t += 1 if score.warned_time
+        # puts "Positive offset #{changes}"
+      end
+    end
+  end
+
+  begin
+    average_neg = total_score_offsets_negative / score_offsets_negative
+    average_pos = total_score_offsets_positive / score_offsets_positive
+  rescue
+  end
+  puts "Division: #{division}"
+  puts "Average negative changes: #{average_neg} (total negative delta teams: #{score_offsets_negative})."
+  puts "Average positive changes: #{average_pos} (total positive delta teams: #{score_offsets_positive})."
+  puts "Scores that were reduced with multiple instances flag: #{negative_warn_m}."
+  puts "Scores that were reduced with time flag: #{negative_warn_t}."
+  puts "Scores that were increased with multiple instances flag: #{positive_warn_m}."
+  puts "Scores that were increased with time flag: #{positive_warn_t}."
+end
