@@ -12,7 +12,7 @@ File.readlines('cp8_scores/allservice_round1.txt').each do |line|
   if score != nil
     score.r1_o_score = line_parsed[2].to_i
     score.total_score = score.r1_o_score
-    score.state = line_parsed[2].to_s
+    score.state = line_parsed[1].to_s
   else
     score = Score.new({
       :team_id => line_parsed[0].to_s,
