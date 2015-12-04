@@ -34,6 +34,15 @@ class Magi < Sinatra::Base
     plat_slots = 0 if params[:division] == 'ms'
     mst50_slots = 0 unless params[:division] == 'ms'
 
+    if params[:division] == 'all-service'
+      categories = ['cap', 'afjrotc', 'mcjrotc', 'ajrotc', 'njrotc', 'nscc']
+
+      plat_slots = ""
+      categories.each do |category|
+        plat_slots += "#{(Score.where({:state => category}).count * 0.3).round(0)} in #{category}; "
+      end
+    end
+
     last_update = Score.where({:team_id => "CPOC"}).first.updated_at
 
     erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :mst50_slots => mst50_slots, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
