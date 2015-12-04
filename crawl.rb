@@ -70,6 +70,7 @@ def crawl_now
       end
       score.division = division
       score.state = team_score[:state]
+      score.state.downcase! if division == 'all-service'
       score.images = team_score[:images]
       score.time = team_score[:time]
       score.r2_score = team_score[:score]
