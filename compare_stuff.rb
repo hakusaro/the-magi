@@ -33,14 +33,14 @@ divisions.each do |division|
         negative_warn_m += 1 if score.warned_multi
         negative_warn_t += 1 if score.warned_time
 
-        puts "Negative offset of #{score.team_id} (time: #{score.time.strip}, m?: #{score.warned_multi}) (scrape: #{score.r1_score}, official: #{score.r1_o_score}): #{changes * -1}"
+        puts "Negative offset of #{score.team_id} (time: #{score.time.strip}, m?: #{score.warned_multi}) (scrape: #{score.r1_score}, official: #{score.r1_o_score}): #{changes}"
       else
         total_score_offsets_positive += changes
         score_offsets_positive += 1
 
         positive_warn_m += 1 if score.warned_multi
         positive_warn_t += 1 if score.warned_time
-        # puts "Positive offset #{changes}"
+        puts "Positive offset of #{score.team_id} (time: #{score.time.strip}, m?: #{score.warned_multi}) (scrape: #{score.r1_score}, official: #{score.r1_o_score}): #{changes}"
       end
     end
   end
