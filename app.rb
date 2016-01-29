@@ -12,10 +12,10 @@ class Magi < Sinatra::Base
   get '/all/?' do
     score_count = Score.all.count
 
-    scores = Score.sort(:total_score.desc)
+    scores = Score.sort(:r3_score.desc)
 
     plat_slots = 0
-    last_update = Score.where({:team_id => "CPOC"}).first.updated_at
+    last_update = Score.where({:team_id => "CPOC_GOL"}).first.updated_at
     erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :scores => scores, :teams => score_count, :division => "N/A", :state => params[:state]}
   end
 
@@ -43,7 +43,7 @@ class Magi < Sinatra::Base
       end
     end
 
-    last_update = Score.where({:team_id => "CPOC"}).first.updated_at
+    last_update = Score.where({:team_id => "CPOC_GOL"}).first.updated_at
 
     erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :mst50_slots => mst50_slots, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
   end
@@ -58,7 +58,7 @@ class Magi < Sinatra::Base
   end
 
   get '/team/:teamid/?' do
-    scores = Score.where({:team_id => params[:teamid]}).sort(:total_score.desc)
+    scores = Score.where({:team_id => params[:teamid]}).sort(:r3_score.desc)
 
     if scores.count == 0
       return erb :error, :locals => {:error => "Invalid team ID specified. Team must be a fully qualified ID, e.g. 07-0152."}
@@ -75,14 +75,14 @@ class Magi < Sinatra::Base
 
     teams = Array.new
     params[:teamids].split(',').each do |team|
-      sc = Score.where({:team_id => team}).sort(:total_score.desc).first
+      sc = Score.where({:team_id => team}).sort(:r3_score.desc).first
 
       unless sc == nil
         teams.push(sc)
       end
     end
 
-    teams.sort! { |a, b| b.total_score <=> a.total_score }
+    teams.sort! { |a, b| b.r3_score <=> a.r3_score }
 
     if teams.count == 0
       return erb :error, :locals => {:error => "Invalid team IDs specified. Teams must be fully qualified, e.g. 07-0152,06-0238, etc."}
@@ -99,7 +99,7 @@ class Magi < Sinatra::Base
       return erb :error, :locals => {:error => 'Invalid state / division combo specified. No data found.'}
     end
 
-    teams = Score.where({:division => params[:division], :state => params[:state]}).sort(:total_score.desc)
+    teams = Score.where({:division => params[:division], :state => params[:state]}).sort(:r3_score.desc)
 
     erb :teams, :locals => {:teams => teams}
   end

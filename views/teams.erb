@@ -21,15 +21,16 @@
           <thead>
             <tr>
               <th>Team ID</th>
-              <!-- <th>Tier</th> -->
-              <th>Round 1</th>
-              <th>Round 2</th>
-              <th>Total</th>
-              <!-- <th>State Tier Rank</th> -->
-              <!-- <th>Top 3 in Tier?</th> -->
-              <!-- <th>Wildcard?</th> -->
-              <th>Platinum?</th>
-              <th>MST50?</th>
+              <th>Tier</th>
+              <!-- <th>Round 1</th> -->
+              <!-- <th>Round 2</th> -->
+              <!-- <th>Total</th> -->
+              <th>Round 3 Score</th>
+              <th>State Tier Rank</th>
+              <th>Top 3 in Tier?</th>
+              <th>Wildcard?</th>
+              <!-- <th>Platinum?</th> -->
+              <!-- <th>MST50?</th> -->
             </tr>
           </thead>
           <tbody>
@@ -37,16 +38,16 @@
               out = ""
               teams.each do |score|
                 out += "<tr>"
-                out += "<td><a href=\'http://scoreboard.uscyberpatriot.org/team.php?team=#{score.team_id}\' target='_blank'>#{score.team_id}</a> #{score.warned_multi_r2 ? '<img src=\'/img/error.png\'/>' : ''}#{score.warned_time_r2 ? '<img src=\'/img/clock.png\' />' : ''}</td>"
-                # out += "<td>#{score.tier}</td>"
-                out += "<td>#{score.r1_o_score}</td>"
-                out += "<td>#{score.r2_score}</td>"
-                out += "<td>#{score.total_score}</td>"
-                # out += "<td>#{score.state_rank}</td>"
-                # out += "<td>#{score.top3 ? '<strong>Yes</strong>' : 'No'}</td>"
-                # out += "<td>#{score.wildcard ? '<strong>Yes</strong>' : 'No'}</td>"
-                out += "<td>#{score.platinum ? '<strong>Yes</strong>' : 'No'}</td>"
-                out += "<td>#{score.mst50 ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td><a href=\'http://scoreboard.uscyberpatriot.org/team.php?team=#{score.team_id}\' target='_blank'>#{score.team_id}</a> #{score.warned_multi_r3 ? '<img src=\'/img/error.png\'/>' : ''}#{score.warned_time_r3 ? '<img src=\'/img/clock.png\' />' : ''}</td>"
+                out += "<td>#{score.tier}</td>"
+                # out += "<td>#{score.r1_o_score}</td>"
+                # out += "<td>#{score.r2_score}</td>"
+                out += "<td>#{score.r3_score}</td>"
+                out += "<td>#{score.state_rank}</td>"
+                out += "<td>#{score.top3 ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.wildcard ? '<strong>Yes</strong>' : 'No'}</td>"
+                # out += "<td>#{score.platinum ? '<strong>Yes</strong>' : 'No'}</td>"
+                # out += "<td>#{score.mst50 ? '<strong>Yes</strong>' : 'No'}</td>"
                 out += "</tr>"
               end
               out
