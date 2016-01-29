@@ -135,6 +135,7 @@ def calculate_state_rank
           end
           if advancement > 0
             score.top3 = true
+            score.wildcard = false
           else
             score.top3 = false
           end
