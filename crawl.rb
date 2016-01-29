@@ -157,7 +157,8 @@ def calculate_state_rank
 
     divisions.each do |division|
       tiers.each do |tier|
-        wildcards = 12
+        wildcards = 45 if division == 'all-service'
+        wildcards = 36 if division == 'open'
         scores = Score.where({:division => division, :tier => tier}).sort(:r3_score.desc)
         scores.each do |score|
           if wildcards == 0
