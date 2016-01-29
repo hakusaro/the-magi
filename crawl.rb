@@ -70,7 +70,7 @@ def crawl_now
       end
       score.division = division
       score.state = team_score[:state]
-      score.state.downcase! if division == 'all-service'
+      # score.state.downcase! if division == 'all-service'
       score.images = team_score[:images]
       score.time = team_score[:time]
       # score.r2_score = team_score[:score]
@@ -91,7 +91,7 @@ end
 
 def calculate_state_rank
   locations = []
-  divisions = ['open', 'all-serivce']
+  divisions = ['open', 'all-service']
   tiers = ['Silver', 'Gold', 'Platinum']
   File.readlines('location_full_list.txt').each do |line|
     locations.push(line.strip!)
