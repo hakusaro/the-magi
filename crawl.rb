@@ -117,7 +117,7 @@ def calculate_state_rank
       tiers.each do |tier|
         
         score_count = Score.where({:division => division, :state => location, :tier => tier}).count
-        puts "Calculating #{location} / #{division} / #{tier} (#{score_count} teams)."
+        # puts "Calculating #{location} / #{division} / #{tier} (#{score_count} teams)."
         scores = Score.where({:division => division, :state => location, :tier => tier}).sort(:r3_score.desc)
 
         advancement = 3
