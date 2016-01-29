@@ -24,11 +24,11 @@ def crawl_now
       :id => row.children[0].children[0].to_s, 
       :division => row.children[1].children[0].to_s, 
       :state => row.children[2].children[0].to_s,
-      :images => row.children[3].children[0].to_s.to_i,
-      :time => row.children[4].children[0].to_s,
-      :score => row.children[5].children[0].to_s.to_i,
-      :warnings => row.children[6].children[0].to_s,
-      :tier => nil
+      :images => row.children[4].children[0].to_s.to_i,
+      :time => row.children[5].children[0].to_s,
+      :score => row.children[6].children[0].to_s.to_i,
+      :warnings => row.children[7].children[0].to_s,
+      :tier => row.children[3].children[0].to_s
     }
 
     division = team_score[:division].downcase
@@ -73,9 +73,10 @@ def crawl_now
       score.state.downcase! if division == 'all-service'
       score.images = team_score[:images]
       score.time = team_score[:time]
-      score.r2_score = team_score[:score]
+      # score.r2_score = team_score[:score]
+      score.r3_score = team_score[:score]
       score.warnings = team_score[:warnings]
-      score.total_score = score.r1_o_score + score.r2_score
+      # score.total_score = score.r1_o_score + score.r2_score
       score.tier = team_score[:tier]
       if (score.save)
         # puts "Team is #{team_score[:id]}. They're at #{team_score[:score]} in #{team_score[:state]}'s #{team_score[:division]} (#{team_score[:tier]}) division."
@@ -92,7 +93,7 @@ def calculate_state_rank
   locations = []
   divisions = ['open', 'all-serivce']
   tiers = ['Silver', 'Gold', 'Platinum']
-  File.readlines('location_list.txt').each do |line|
+  File.readlines('location_full_list.txt').each do |line|
     locations.push(line.strip!)
   end
 
@@ -103,7 +104,7 @@ def calculate_state_rank
       tiers.each do |tier|
         
         score_count = Score.where({:division => division, :state => location, :tier => tier}).count
-        # puts "Calculating #{location} / #{division} / #{tier} (#{score_count} teams)."
+        puts "Calculating #{location} / #{division} / #{tier} (#{score_count} teams)."
         scores = Score.where({:division => division, :state => location, :tier => tier}).sort(:r3_score.desc)
 
         advancement = 3
@@ -111,8 +112,8 @@ def calculate_state_rank
         scores.each do |score|
           score.top3 = false
           if score.r3_score == 0 || score.r3_score == nil
-            score.warned_multi_r2 = false
-            score.warned_time_r2 = false
+            score.warned_multi_r3 = false
+            score.warned_time_r3 = false
             score.top3 = false
             score.wildcard = false
             score.state_rank = nil
@@ -131,19 +132,19 @@ def calculate_state_rank
 
           if score.warnings != nil
             if score.warnings.include?('M')
-              score.warned_multi_r2 = true
+              score.warned_multi_r3 = true
             else
-              score.warned_multi_r2 = false
+              score.warned_multi_r3 = false
             end
 
             if score.warnings.include?('T')
-              score.warned_time_r2 = true
+              score.warned_time_r3 = true
             else
-              score.warned_time_r2 = false
+              score.warned_time_r3 = false
             end
           else
-            score.warned_multi_r2 = false
-            score.warned_time_r2 = false
+            score.warned_multi_r3 = false
+            score.warned_time_r3 = false
           end
 
           score.save

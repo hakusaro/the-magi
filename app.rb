@@ -26,7 +26,7 @@ class Magi < Sinatra::Base
 
     score_count = Score.where({:division => params[:division]}).count
 
-    scores = Score.where({:division => params[:division]}).sort(:total_score.desc)
+    scores = Score.where({:division => params[:division]}).sort(:r3_score.desc)
 
     plat_slots = (score_count * 0.3).round(0)
     mst50_slots = (score_count * 0.5).round(0)
