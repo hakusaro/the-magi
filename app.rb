@@ -93,6 +93,10 @@ class Magi < Sinatra::Base
   end
 
   get '/:state/:division/?' do
+    state = params[:state]
+    if state.include?('_')
+      state['_'] = ' '
+    end
     score_count = Score.where({:division => params[:division], :state => params[:state]}).count
 
     if score_count == 0
