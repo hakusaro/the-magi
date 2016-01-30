@@ -26,9 +26,15 @@ class Magi < Sinatra::Base
       return erb :error, :locals => {:error => "Invalid division specified. Must either be 'open', 'middle', or 'all-service'."}
     end
 
-    score_count = Score.where({:division => params[:division]}).count
+    if params[:tier] == 'Platinum' || params[:tier] == 'Silver' || params[:tier] == 'Gold'
+      score_count = Score.where({:division => params[:division], :tier => params[:tier]}).count
 
-    scores = Score.where({:division => params[:division]}).sort(:r3_score.desc)
+      scores = Score.where({:division => params[:division], :tier => params[:tier]}).sort(:r3_score.desc)
+    else
+      score_count = Score.where({:division => params[:division]}).count
+
+      scores = Score.where({:division => params[:division]}).sort(:r3_score.desc)
+    end
 
     plat_slots = (score_count * 0.3).round(0)
     mst50_slots = (score_count * 0.5).round(0)
@@ -49,7 +55,6 @@ class Magi < Sinatra::Base
 
     erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :mst50_slots => mst50_slots, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
   end
-
 
   get '/' do
     erb :select_division
