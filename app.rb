@@ -16,7 +16,9 @@ class Magi < Sinatra::Base
 
     plat_slots = 0
     last_update = Score.where({:team_id => "CPOC_GOL"}).first.updated_at
-    erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :scores => scores, :teams => score_count, :division => "N/A", :state => params[:state]}
+    erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :mst50_slots => 0, :scores => scores, :teams => score_count, :division => 'all', :state => 'all'}
+    
+    # erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :scores => scores, :teams => score_count, :division => "N/A", :state => params[:state]}
   end
 
   get '/:division/?' do

@@ -10,9 +10,10 @@ class Crawler
       puts Benchmark.measure { @@recalculate = crawl_now }
       if @@recalculate == true
         puts Benchmark.measure { calculate_state_rank }
+        puts Benchmark.measure { calculate_rank_numbers }
       end
       recalculate = false
-      sleep 60
+      sleep 45
     end
   end
 end

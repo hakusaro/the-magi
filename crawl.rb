@@ -111,7 +111,6 @@ def calculate_state_rank
     end
   end
 
-
   locations.each do |location|
     divisions.each do |division|
       tiers.each do |tier|
@@ -202,6 +201,35 @@ def calculate_state_rank
   end
 
   puts "Calculation of state ranks ok."
+
+end
+
+def calculate_rank_numbers
+  divisions = ['all-service', 'ms', 'open']
+
+  divisions.each do |division|
+    scores = Score.where({:division => division}).sort(:r3_score.desc)
+
+    rank = 1
+
+    scores.each do |score|
+      score.division_rank = rank
+      rank += 1
+      score.save
+    end
+  end
+
+  scores = Score.where({:division.ne => 'ms'}).sort(:r3_score.desc)
+
+  rank = 1
+
+  scores.each do |score|
+    score.global_rank = rank
+    rank += 1
+    score.save
+  end
+
+  puts "Calculation of rank numbers ok."
 
 end
 

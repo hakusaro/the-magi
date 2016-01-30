@@ -24,7 +24,7 @@
             <li>Teams: <%= teams %></li>
             <!-- <li>Platinum Slots: <%= plat_slots == 0 ? "N/A" : plat_slots %></li> -->
             <!-- <li>Middle School Top 50% Slots: <%= mst50_slots > 0 ? mst50_slots : "N/A" %></li> -->
-            <li>CCS is giving states and not categories for all service. Calculations enabled for all service on a state basis.</li>
+            <li>GR = Global rank (open vs all service), DR = Division rank, SRIT = State rank in tier</li>
             <li>Last update: <%= last_update %>. <%= (last_update > Time.now - 150) ? 'Connected to CCS.' : "Disconnected from CCS." %> </li>
           </ul>
         </div>
@@ -50,6 +50,8 @@
         <table style="margin-left: auto; margin-right: auto; text-align: center" id="scoreTable" class="tablesorter">
           <thead>
             <tr>
+              <th>GR</th>
+              <th>DR</th>
               <th>Team ID</th>
               <th>Location / Category</th>
               <th>Tier</th>
@@ -59,7 +61,7 @@
               <!-- <th>Total Score</th> -->
               <!-- <th>Platinum?</th> -->
               <!-- <th>MST50?</th> -->
-              <th>State Rank in Tier</th>
+              <th>SRIT</th>
               <th>Top 3 in Tier?</th>
               <th>Wildcard?</th>
             </tr>
@@ -69,6 +71,8 @@
               out = ""
               scores.each do |score|
                 out += "<tr>"
+                out += "<td>#{score.global_rank}</td>"
+                out += "<td>#{score.division_rank}</td>"
                 out += "<td><a href=\'http://scoreboard.uscyberpatriot.org/team.php?team=#{score.team_id}\' target='_blank'>#{score.team_id}</a> #{score.warned_multi_r3 ? '<img src=\'/img/error.png\' />' : ''}#{score.warned_time_r3 ? '<img src=\'/img/clock.png\' />' : ''}</td>"
                 out += "<td>#{score.state}</td>"
                 out += "<td>#{score.tier}</td>"

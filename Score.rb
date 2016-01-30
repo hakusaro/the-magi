@@ -35,6 +35,9 @@ class Score
   key :notes, String # Notes about weird teams/scores
   key :tier, String # What tier are they?
   key :state_finalist, Boolean # Are they a state finalist?
+
+  key :division_rank, Integer
+  key :global_rank, Integer
   Score.ensure_index(:team_id)
   Score.ensure_index(:state)
   Score.ensure_index(:division)
