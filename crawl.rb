@@ -195,9 +195,6 @@ def calculate_state_rank
   end
 
   puts "Calculation of state ranks ok."
-  puts Score.where({:wildcard => true, :division => 'open', :tier => 'Platinum'}).count
-  puts Score.where({:wildcard => true, :division => 'all-service', :tier => 'Platinum'}).count
-
 
 end
 
