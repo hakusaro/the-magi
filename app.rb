@@ -107,4 +107,20 @@ class Magi < Sinatra::Base
 
     erb :teams, :locals => {:teams => teams}
   end
+
+  get '/:state/:division/:tier/?' do
+    state = params[:state]
+    if state.include?('_')
+      state['_'] = ' '
+    end
+    score_count = Score.where({:division => params[:division], :state => params[:state], :tier => params[:tier]}).count
+
+    if score_count == 0
+      return erb :error, :locals => {:error => 'Invalid state / division combo specified. No data found.'}
+    end
+
+    teams = Score.where({:division => params[:division], :state => params[:state], :tier => params[:tier]}).sort(:r3_score.desc)
+
+    erb :teams, :locals => {:teams => teams}
+  end
 end
