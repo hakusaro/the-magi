@@ -10,9 +10,9 @@ class Magi < Sinatra::Base
   end
 
   get '/all/?' do
-    score_count = Score.all.count
+    score_count = Score.where({:division.ne => 'ms'}).count
 
-    scores = Score.sort(:r3_score.desc)
+    scores = Score.where({:division.ne => 'ms'}).sort(:r3_score.desc)
 
     plat_slots = 0
     last_update = Score.where({:team_id => "CPOC_GOL"}).first.updated_at
