@@ -97,18 +97,12 @@ def calculate_state_rank
     locations.push(line.strip!)
   end
 
-  # Calculate top ranked teams.
-  locations.each do |location|
-    divisions.each do |division|
-      tiers.each do |tier|
-        scores = Score.where({:division => division, :state => location, :tier => tier}).sort(:r3_score.desc)
-        scores.each do |score|
-          score.top3 = false
-          score.wildcard = false
-          score.state_rank = nil
-        end
-      end
-    end
+  scores = Score.all
+  scores.each do |score|
+    score.top3 = false
+    score.wildcard = false
+    score.state_rank = nil
+    score.save
   end
 
   locations.each do |location|
@@ -201,6 +195,9 @@ def calculate_state_rank
   end
 
   puts "Calculation of state ranks ok."
+  puts Score.where({:wildcard => true, :division => 'open', :tier => 'Platinum'}).count
+  puts Score.where({:wildcard => true, :division => 'all-service', :tier => 'Platinum'}).count
+
 
 end
 
