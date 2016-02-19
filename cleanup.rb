@@ -8,5 +8,6 @@ require_relative 'Score'
 Score.all.each do |score|
   score.time = ""
   score.warnings = ""
+  score.r4_score = 0
   score.save
 end

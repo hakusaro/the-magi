@@ -4,72 +4,73 @@ require 'mongo_mapper'
 require_relative 'Score'
 MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
 
-File.readlines('cp8_scores/allservice_round1.txt').each do |line|
-  line_parsed = line.split ' '
+# File.readlines('cp8_scores/allservice_round1.txt').each do |line|
+#   line_parsed = line.split ' '
+#   score = Score.where({:team_id => line_parsed[0]}).first
+
+#   if score != nil
+#     score.r1_o_score = line_parsed[2].to_i
+#     score.total_score = score.r1_o_score
+#     score.state = line_parsed[1].to_s
+#   else
+#     score = Score.new({
+#       :team_id => line_parsed[0].to_s,
+#       :r1_o_score => line_parsed[2].to_i,
+#       :total_score => line_parsed[2].to_i,
+#       :state => line_parsed[1].to_s,
+#       :division => 'all-service'
+#     })
+#     puts "Created a new team #{line_parsed[0]}."
+#   end
+#   if score.save
+#     puts "Stored #{line_parsed[0]} from all service at #{line_parsed[2]}."
+#   else
+#     puts "Failed to save #{line_parsed[0]}."
+#   end
+# end
+
+# File.readlines('cp8_scores/open_round1.txt').each do |line|
+#   line_parsed = line.split ' '
+#   score = Score.where({:team_id => line_parsed[0]}).first
+
+#   if score != nil
+#     score.r1_o_score = line_parsed[1].to_i
+#     score.total_score = score.r1_o_score
+#   else
+#     score = Score.new({
+#       :team_id => line_parsed[0].to_s,
+#       :r1_o_score => line_parsed[1].to_i,
+#       :total_score => line_parsed[1].to_i,
+#       :division => 'open'
+#     })
+#     puts "Created a new team #{line_parsed[0]}."
+#   end
+#   if score.save
+#     puts "Stored #{line_parsed[0]} from open at #{line_parsed[1]}."
+#   else
+#     puts "Failed to save #{line_parsed[0]}."
+#   end
+# end
+
+File.readlines('results.csv').each do |line|
+  line_parsed = line.split ','
   score = Score.where({:team_id => line_parsed[0]}).first
 
   if score != nil
-    score.r1_o_score = line_parsed[2].to_i
-    score.total_score = score.r1_o_score
+    score.r3_score = line_parsed[5].to_f
     score.state = line_parsed[1].to_s
+    score.tier = line_parsed[2].to_s
   else
     score = Score.new({
       :team_id => line_parsed[0].to_s,
-      :r1_o_score => line_parsed[2].to_i,
-      :total_score => line_parsed[2].to_i,
+      :r3_score => line_parsed[5].to_f,
       :state => line_parsed[1].to_s,
-      :division => 'all-service'
+      :tier => line_parsed[2].to_s,
     })
     puts "Created a new team #{line_parsed[0]}."
   end
   if score.save
-    puts "Stored #{line_parsed[0]} from all service at #{line_parsed[2]}."
-  else
-    puts "Failed to save #{line_parsed[0]}."
-  end
-end
-
-File.readlines('cp8_scores/open_round1.txt').each do |line|
-  line_parsed = line.split ' '
-  score = Score.where({:team_id => line_parsed[0]}).first
-
-  if score != nil
-    score.r1_o_score = line_parsed[1].to_i
-    score.total_score = score.r1_o_score
-  else
-    score = Score.new({
-      :team_id => line_parsed[0].to_s,
-      :r1_o_score => line_parsed[1].to_i,
-      :total_score => line_parsed[1].to_i,
-      :division => 'open'
-    })
-    puts "Created a new team #{line_parsed[0]}."
-  end
-  if score.save
-    puts "Stored #{line_parsed[0]} from open at #{line_parsed[1]}."
-  else
-    puts "Failed to save #{line_parsed[0]}."
-  end
-end
-
-File.readlines('cp8_scores/middle_round1.txt').each do |line|
-  line_parsed = line.split ' '
-  score = Score.where({:team_id => line_parsed[0]}).first
-
-  if score != nil
-    score.r1_o_score = line_parsed[1].to_i
-    score.total_score = score.r1_o_score
-  else
-    score = Score.new({
-      :team_id => line_parsed[0].to_s,
-      :r1_o_score => line_parsed[1].to_i,
-      :total_score => line_parsed[1].to_i,
-      :division => 'ms'
-    })
-    puts "Created a new team #{line_parsed[0]}."
-  end
-  if score.save
-    puts "Stored #{line_parsed[0]} from middle at #{line_parsed[1]}."
+    puts "Stored #{line_parsed[0]} from open at #{line_parsed[5]}."
   else
     puts "Failed to save #{line_parsed[0]}."
   end

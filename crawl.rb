@@ -47,8 +47,9 @@ def crawl_now
         :team_id => team_score[:id],
         :division => division,
         :r1_score => 0,
-        :r2_score => team_score[:score],
+        :r2_score => 0,
         :r3_score => 0,
+        :r4_score => team_score[:score],
         :time => team_score[:time],
         :warnings => team_score[:warnings],
         :images => team_score[:images],
@@ -74,7 +75,7 @@ def crawl_now
       score.images = team_score[:images]
       score.time = team_score[:time]
       # score.r2_score = team_score[:score]
-      score.r3_score = team_score[:score]
+      score.r4_score = team_score[:score]
       score.warnings = team_score[:warnings]
       # score.total_score = score.r1_o_score + score.r2_score
       score.tier = team_score[:tier]
@@ -208,7 +209,7 @@ def calculate_rank_numbers
   divisions = ['all-service', 'ms', 'open']
 
   divisions.each do |division|
-    scores = Score.where({:division => division}).sort(:r3_score.desc)
+    scores = Score.where({:division => division}).sort(:r4_score.desc)
 
     rank = 1
 
@@ -219,7 +220,7 @@ def calculate_rank_numbers
     end
   end
 
-  scores = Score.where({:division.ne => 'ms'}).sort(:r3_score.desc)
+  scores = Score.where({:division.ne => 'ms'}).sort(:r4_score.desc)
 
   rank = 1
 
@@ -349,6 +350,27 @@ def calculate_platinums
   end
 
   puts "Calculation of MST50 ok."
+end
+
+def calculate_national_finalists
+  divisions = ['all-service', 'open', 'ms']
+
+  divisions.each do |division|
+    scores = Score.where({:division => division, :tier => 'Platinum'}).sort(:r4_score.desc)
+    scores = Score.where({:division => division}).sort(:r4_score.desc) if division == 'ms'
+
+    slots = 13
+    slots = 4 if division == 'ms'
+
+    scores.each do |score|
+      score.nf = true if slots > 1
+      slots -= 1 if slots > 1
+      score.nf = false if slots == 0
+      score.save
+    end
+  end
+
+  puts "Calculation of national finalists ok."
 end
 
 # binding.pry

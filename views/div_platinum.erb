@@ -24,7 +24,9 @@
             <li>Teams: <%= teams %></li>
             <!-- <li>Platinum Slots: <%= plat_slots == 0 ? "N/A" : plat_slots %></li> -->
             <!-- <li>Middle School Top 50% Slots: <%= mst50_slots > 0 ? mst50_slots : "N/A" %></li> -->
-            <li>GR = Global rank (open vs all service), DR = Division rank, SRIT = State rank in tier</li>
+            <li>GR = Global rank (open vs all service), DR = Division rank</li>
+            <li>Platinum teams must be in the top 12 to go to the national finals.</li>
+            <li>Middle school teams must be in the top 3 to go to the national finals.</li>
             <li>Last update: <%= last_update %>. <%= (last_update > Time.now - 150) ? 'Connected to CCS.' : "Disconnected from CCS." %> </li>
           </ul>
         </div>
@@ -61,9 +63,9 @@
               <!-- <th>Total Score</th> -->
               <!-- <th>Platinum?</th> -->
               <!-- <th>MST50?</th> -->
-              <th>SRIT</th>
-              <th>Top 3 in Tier?</th>
-              <th>Wildcard?</th>
+              <th>Finalist?</th>
+<!--               <th>Top 3 in Tier?</th>
+              <th>Wildcard?</th> -->
             </tr>
           </thead>
           <tbody>
@@ -79,12 +81,12 @@
                 # out += "<td>#{score.r1_o_score}</td>"
                 # out += "<td>#{score.r2_score}</td>"
                 # out += "<td>#{score.total_score}</td>"
-                out += "<td>#{score.r3_score}</td>"
+                out += "<td>#{score.r4_score}</td>"
                 # out += "<td>#{score.platinum ? '<strong>Yes</strong>' : 'No'}</td>"
                 # out += "<td>#{score.mst50 ? '<strong>Yes</strong>' : 'No'}</td>"
-                out += "<td>#{score.state_rank}</td>"
-                out += "<td>#{score.top3 ? '<strong>Yes</strong>' : 'No'}</td>"
-                out += "<td>#{score.wildcard ? '<strong>Yes</strong>' : 'No'}</td>"
+                # out += "<td>#{score.state_rank}</td>"
+                out += "<td>#{score.nf ? '<strong>Yes</strong>' : 'No'}</td>"
+                # out += "<td>#{score.wildcard ? '<strong>Yes</strong>' : 'No'}</td>"
                 out += "</tr>"
               end
               out

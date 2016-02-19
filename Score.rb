@@ -11,8 +11,10 @@ class Score
   key :r1_o_score, Integer # Round 1 official score
   key :r2_score, Integer # Round 2 crawled score
   key :r2_o_score, Integer # Round 2 official score
-  key :r3_score, Integer # Round 3 crawled score
+  key :r3_score, Float # Round 3 crawled score
   key :r3_o_score, Integer # Round 3 official score
+  key :r4_score, Integer # Round 4 score
+  key :r4_o_score, Integer # Round 4 official score
   key :total_score, Integer # Total score (from combined rounds)
   key :division, String # Division
   key :state, String # State or all service category
@@ -38,6 +40,10 @@ class Score
 
   key :division_rank, Integer
   key :global_rank, Integer
+
+  key :locked, Boolean # Is the score not supposed to go up?
+
+  key :nf, Boolean
   Score.ensure_index(:team_id)
   Score.ensure_index(:state)
   Score.ensure_index(:division)
