@@ -32,6 +32,8 @@ class Score
   key :warned_time_r3, Boolean
   key :warned_multi_r2, Boolean
   key :warned_multi_r3, Boolean
+  key :warned_time_r4, Boolean
+  key :warned_multi_r4, Boolean
   key :score_withheld, Boolean # Did CPOC withhold the score?
   key :score_review, Boolean # Did CPOC mark the score for review?
   key :notes, String # Notes about weird teams/scores

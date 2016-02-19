@@ -364,10 +364,36 @@ def calculate_national_finalists
 
     scores.each do |score|
       score.nf = true if slots > 1
-      slots -= 1 if slots > 1
+      slots -= 1 if slots >= 1
+      # puts slots if slots != 0
       score.nf = false if slots == 0
+
       score.save
     end
+  end
+
+  scores = Score.all
+
+  scores.each do |score|
+    if score.warnings != nil
+      # puts "Warnings not nil for team #{score.team_id}"
+      if score.warnings.include?('M')
+        score.warned_multi_r4 = true
+      else
+        score.warned_multi_r4 = false
+      end
+
+      if score.warnings.include?('T')
+        score.warned_time_r4 = true
+      else
+        score.warned_time_r4 = false
+      end
+    else
+      score.warned_multi_r4 = false
+      score.warned_time_r4 = false
+    end
+
+    score.save
   end
 
   puts "Calculation of national finalists ok."
