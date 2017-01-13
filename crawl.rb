@@ -170,9 +170,11 @@ def calculate_state_ranks
         scores = Score.where({:division => division, :tier => tier}).sort(:r3_score.desc)
         scores.each do |score|
           if wildcards == 0
-            score.wildcard = false
-            score.save
-            break
+            if score.wildcard == true
+              score.wildcard = false
+              score.save
+            end
+            next
           end
 
           if score.top3
