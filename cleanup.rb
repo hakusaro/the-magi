@@ -6,8 +6,9 @@ require_relative 'Score'
 # end
 
 Score.all.each do |score|
-  score.time = ""
-  score.warnings = ""
-  score.r4_score = 0
-  score.save
+  if score.division == 'all-service'
+    score.top3 = false
+    score.wildcard = false
+    score.save
+  end
 end
