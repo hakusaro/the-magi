@@ -1,5 +1,5 @@
 source "http://rubygems.org/"
-ruby '2.3.0'
+ruby '2.3.3'
 gem 'nokogiri'
 gem 'sinatra'
 gem 'bundler'
