@@ -28,6 +28,13 @@ class Magi < Sinatra::Base
     erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => 0, :mst50_slots => 0, :scores => scores, :teams => score_count, :division => 'best', :state => 'all'}
   end
 
+  get '/stars/?' do
+    scores = Score.where({:star => true})
+    score_count = scores.count
+    last_update = Score.where({:team_id => "09-0235"}).first.updated_at
+    erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => 0, :mst50_slots => 0, :scores => scores, :teams => score_count, :division => 'best', :state => 'all'}
+  end
+
   get '/:division/?' do
     unless params[:division] == 'all-service' || params[:division] == 'open' || params[:division] == 'ms'
       return erb :error, :locals => {:error => "Invalid division specified. Must either be 'open', 'middle', or 'all-service'."}

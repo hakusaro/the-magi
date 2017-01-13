@@ -79,10 +79,16 @@ MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
 File.readlines('cp9_tids.txt').each do |line|
   score = Score.where({:team_id => line.strip}).first
 
-  next if score == nil
-
-  score.star = true
-  score.save
+  if score == nil
+    score = Score.new({
+      :team_id => line.strip.to_s,
+      :star => true
+    })
+    score.save
+  else
+    score.star = true
+    score.save
+  end
 end
 
 # File.readlines('cp7_r3_advancement_open.txt').each do |line|
