@@ -11,7 +11,7 @@
     
     <div class="row">
       <div class="large-12 columns">
-        <h3><a href="/"><img src="/img/pryaxis.svg" style="height: 48px" /></a> <small>Pryaxis CyberPatriot 8 Projections</small></h3>
+        <h3><a href="/"><img src="/img/pryaxis.svg" style="height: 48px" /></a> <small>Pryaxis CyberPatriot 9 Projections</small></h3>
       </div>
     </div>
 
@@ -30,9 +30,9 @@
               <th>Score</th>
               <th>Finalist?</th>
               <!-- <th>Top 3 in Tier?</th> -->
-              <!-- <th>Wildcard?</th> -->
-              <!-- <th>Platinum?</th> -->
-              <!-- <th>MST50?</th> -->
+              <th>Wildcard?</th>
+              <th>Platinum?</th>
+              <th>MST50?</th>
             </tr>
           </thead>
           <tbody>
@@ -49,10 +49,10 @@
                 # out += "<td>#{score.total_score}</td>"
                 out += "<td>#{score.r4_score}</td>"
                 # out += "<td>#{score.state_rank}</td>"
-                # out += "<td>#{score.top3 ? '<strong>Yes</strong>' : 'No'}</td>"
-                # out += "<td>#{score.wildcard ? '<strong>Yes</strong>' : 'No'}</td>"
-                out += "<td>#{score.nf ? '<strong>Yes</strong>' : 'No'}</td>"
-                # out += "<td>#{score.mst50 ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.top3 ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.wildcard ? '<strong>Yes</strong>' : 'No'}</td>"
+                # out += "<td>#{score.nf ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.mst50 ? '<strong>Yes</strong>' : 'No'}</td>"
                 out += "</tr>"
               end
               out

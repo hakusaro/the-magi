@@ -48,8 +48,8 @@ def crawl_now
         :division => division,
         :r1_score => 0,
         :r2_score => 0,
-        :r3_score => 0,
-        :r4_score => team_score[:score],
+        :r3_score => team_score[:score],
+        :r4_score => 0,
         :time => team_score[:time],
         :warnings => team_score[:warnings],
         :images => team_score[:images],
@@ -75,7 +75,7 @@ def crawl_now
       score.images = team_score[:images]
       score.time = team_score[:time]
       # score.r2_score = team_score[:score]
-      score.r4_score = team_score[:score]
+      score.r3_score = team_score[:score]
       score.warnings = team_score[:warnings]
       # score.total_score = score.r1_o_score + score.r2_score
       score.tier = team_score[:tier]
@@ -90,7 +90,7 @@ def crawl_now
   return true
 end
 
-def calculate_state_rank
+def calculate_state_ranks
   locations = []
   divisions = ['open', 'all-service']
   tiers = ['Silver', 'Gold', 'Platinum']

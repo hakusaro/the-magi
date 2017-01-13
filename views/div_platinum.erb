@@ -11,7 +11,7 @@
     
     <div class="row">
       <div class="large-12 columns">
-        <h3><a href="/"><img src="/img/pryaxis.svg" style="height: 48px" /></a> <small>Pryaxis CyberPatriot 8 Projections</small></h3>
+        <h3><a href="/"><img src="/img/pryaxis.svg" style="height: 48px" /></a> <small>Pryaxis CyberPatriot 9 Projections</small></h3>
       </div>
     </div>
 
@@ -24,9 +24,8 @@
             <li>Teams: <%= teams %></li>
             <!-- <li>Platinum Slots: <%= plat_slots == 0 ? "N/A" : plat_slots %></li> -->
             <!-- <li>Middle School Top 50% Slots: <%= mst50_slots > 0 ? mst50_slots : "N/A" %></li> -->
-            <li>GR = Global rank (open vs all service), DR = Division rank</li>
-            <li>Platinum teams must be in the top 12 to go to the national finals.</li>
-            <li>Middle school teams must be in the top 3 to go to the national finals.</li>
+            <li>GR = Global rank (open vs all service), DR = Division rank, MST50 = Middle School Top 50%</li>
+            <li><a href="http://uscyberpatriot.org/competition/Competition-Overview/tiers-and-advancement">Using advancement rules from CyberPatriot.</a></li>
             <li>Last update: <%= last_update %>. <%= (last_update > Time.now - 150) ? 'Connected to CCS.' : "Disconnected from CCS." %> </li>
           </ul>
         </div>
@@ -62,10 +61,10 @@
               <!-- <th>Round 2</th> -->
               <!-- <th>Total Score</th> -->
               <!-- <th>Platinum?</th> -->
-              <!-- <th>MST50?</th> -->
-              <th>Finalist?</th>
-<!--               <th>Top 3 in Tier?</th>
-              <th>Wildcard?</th> -->
+              <th>MST50?</th>
+              <!-- <th>Finalist?</th> -->
+              <th>Top 3 in Tier?</th>
+              <th>Wildcard?</th>
             </tr>
           </thead>
           <tbody>
@@ -81,12 +80,12 @@
                 # out += "<td>#{score.r1_o_score}</td>"
                 # out += "<td>#{score.r2_score}</td>"
                 # out += "<td>#{score.total_score}</td>"
-                out += "<td>#{score.r4_score}</td>"
+                out += "<td>#{score.r3_score}</td>"
                 # out += "<td>#{score.platinum ? '<strong>Yes</strong>' : 'No'}</td>"
-                # out += "<td>#{score.mst50 ? '<strong>Yes</strong>' : 'No'}</td>"
-                # out += "<td>#{score.state_rank}</td>"
-                out += "<td>#{score.nf ? '<strong>Yes</strong>' : 'No'}</td>"
-                # out += "<td>#{score.wildcard ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.mst50 ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.top3}</td>"
+                # out += "<td>#{score.nf ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.wildcard ? '<strong>Yes</strong>' : 'No'}</td>"
                 out += "</tr>"
               end
               out
@@ -101,7 +100,7 @@
 
     <div class="row">
       <div class="large-12 columns">
-        <p class="text-right"><small>Powered by Jump. <a href="https://jump.software/humans.txt">Love from Aurora</a>. Need help? Email <a href="mailto:concierge@jump.software">concierge@jump.software</a>. <a href="http://status.jump.software">System Status</a>.</small></p>
+        <p class="text-right"><small>Powered by Jump. <a href="https://jump.software/humans.txt">Love from Littleton</a>. Need help? Email <a href="mailto:concierge@jump.software">concierge@jump.software</a>. <a href="https://twitter.com/pryaxis">Follow us on Twitter</a>.</small></p>
       </div>
     </div>
     
