@@ -28,11 +28,11 @@
               <!-- <th>Round 2</th> -->
               <!-- <th>Total</th> -->
               <th>Score</th>
-              <th>Finalist?</th>
-<!--               <th>Top 3 in Tier?</th>
-              <th>Wildcard?</th> -->
+              <!-- <th>Finalist?</th> -->
+              <th>Top 3 in Tier?</th>
+              <th>Wildcard?</th>
               <!-- <th>Platinum?</th> -->
-              <!-- <th>MST50?</th> -->
+              <th>MST50?</th>
             </tr>
           </thead>
           <tbody>
@@ -46,12 +46,12 @@
                 out += "<td>#{score.tier}</td>"
                 # out += "<td>#{score.r1_o_score}</td>"
                 # out += "<td>#{score.r2_score}</td>"
-                out += "<td>#{score.r4_score}</td>"
+                out += "<td>#{score.r3_score}</td>"
                 # out += "<td>#{score.state_rank}</td>"
-                # out += "<td>#{score.top3 ? '<strong>Yes</strong>' : 'No'}</td>"
-                # out += "<td>#{score.wildcard ? '<strong>Yes</strong>' : 'No'}</td>"
-                out += "<td>#{score.nf ? '<strong>Yes</strong>' : 'No'}</td>"
-                # out += "<td>#{score.mst50 ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.top3 ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.wildcard ? '<strong>Yes</strong>' : 'No'}</td>"
+                # out += "<td>#{score.nf ? '<strong>Yes</strong>' : 'No'}</td>"
+                out += "<td>#{score.mst50 ? '<strong>Yes</strong>' : 'No'}</td>"
                 out += "</tr>"
               end
               out

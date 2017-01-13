@@ -15,7 +15,7 @@ class Magi < Sinatra::Base
     scores = Score.where({:division.ne => 'ms'}).sort(:r3_score.desc)
 
     plat_slots = 0
-    last_update = Score.where({:team_id => "CPOC_GOL"}).first.updated_at
+    last_update = Score.where({:team_id => "09-0235"}).first.updated_at
     erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :mst50_slots => 0, :scores => scores, :teams => score_count, :division => 'all', :state => 'all'}
     
     # erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :scores => scores, :teams => score_count, :division => "N/A", :state => params[:state]}
@@ -51,7 +51,7 @@ class Magi < Sinatra::Base
       end
     end
 
-    last_update = Score.where({:team_id => "CPOC_GOL"}).first.updated_at
+    last_update = Score.where({:team_id => "09-0235"}).first.updated_at
 
     erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => plat_slots, :mst50_slots => mst50_slots, :scores => scores, :teams => score_count, :division => params[:division], :state => params[:state]}
   end

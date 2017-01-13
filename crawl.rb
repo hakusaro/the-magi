@@ -22,8 +22,8 @@ def crawl_now
     end
     team_score = {
       :id => row.children[0].children[0].to_s, 
-      :division => row.children[1].children[0].to_s, 
-      :state => row.children[2].children[0].to_s,
+      :division => row.children[2].children[0].to_s, 
+      :state => row.children[1].children[0].to_s,
       :images => row.children[4].children[0].to_s.to_i,
       :time => row.children[5].children[0].to_s,
       :score => row.children[6].children[0].to_s.to_i,
@@ -92,9 +92,9 @@ end
 
 def calculate_state_ranks
   locations = []
-  divisions = ['open', 'all-service']
+  divisions = ['open']
   tiers = ['Silver', 'Gold', 'Platinum']
-  File.readlines('location_full_list.txt').each do |line|
+  File.readlines('location_list.txt').each do |line|
     locations.push(line.strip!)
   end
 
@@ -157,11 +157,11 @@ def calculate_state_ranks
 
     # Zero out all wildcards before we start
     # Hacky shim because otherwise we never de-assign wildcards who fall out
-    scores = Score.where(:wildcard => true)
-    scores.each do |score|
-      score.wildcard = false
-      score.save
-    end
+    # scores = Score.where(:wildcard => true)
+    # scores.each do |score|
+    #   score.wildcard = false
+    #   score.save
+    # end
 
     divisions.each do |division|
       tiers.each do |tier|
@@ -170,6 +170,8 @@ def calculate_state_ranks
         scores = Score.where({:division => division, :tier => tier}).sort(:r3_score.desc)
         scores.each do |score|
           if wildcards == 0
+            score.wildcard = false
+            score.save
             break
           end
 
@@ -195,6 +197,41 @@ def calculate_state_ranks
     end
   end
 
+  score_count = Score.where({:division => 'ms'}).count
+
+  scores = Score.where({:division => 'ms'}).sort(:r3_score.desc)
+
+  mst50_slots = (score_count * 0.5).round(0)
+  mst50_slots_save = mst50_slots
+
+  scores.each do |score|
+    if mst50_slots > 0
+      score.mst50 = true
+      mst50_slots -= 1
+    else
+      score.mst50 = false
+    end
+
+    if score.warnings != nil
+      if score.warnings.include?('M')
+        score.warned_multi_r3 = true
+      else
+        score.warned_multi_r3 = false
+      end
+
+      if score.warnings.include?('T')
+        score.warned_time_r3 = true
+      else
+        score.warned_time_r3 = false
+      end
+    else
+      score.warned_multi_r3 = false
+      score.warned_time_r3 = false
+    end
+
+    score.save
+  end
+
   puts "Calculation of state ranks ok."
   puts Score.where({:wildcard => true, :division => 'open', :tier => 'Platinum'}).count
   puts Score.where({:wildcard => true, :division => 'all-service', :tier => 'Platinum'}).count
@@ -209,7 +246,7 @@ def calculate_rank_numbers
   divisions = ['all-service', 'ms', 'open']
 
   divisions.each do |division|
-    scores = Score.where({:division => division}).sort(:r4_score.desc)
+    scores = Score.where({:division => division}).sort(:r3_score.desc)
 
     rank = 1
 
@@ -220,7 +257,7 @@ def calculate_rank_numbers
     end
   end
 
-  scores = Score.where({:division.ne => 'ms'}).sort(:r4_score.desc)
+  scores = Score.where({:division.ne => 'ms'}).sort(:r3_score.desc)
 
   rank = 1
 
