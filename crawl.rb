@@ -5,7 +5,7 @@ require 'mongo_mapper'
 require 'active_support'
 require 'active_support/core_ext'
 require_relative 'Score'
-MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
+MongoMapper.setup({'production' => {'uri' => ENV['DATABASE_URL']}}, 'production')
 
 def crawl_now
   begin

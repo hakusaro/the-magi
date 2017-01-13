@@ -61,7 +61,7 @@ class Magi < Sinatra::Base
   end
 
   configure do
-    MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
+    MongoMapper.setup({'production' => {'uri' => ENV['DATABASE_URL']}}, 'production')
   end
 
   get '/team/:teamid/?' do
