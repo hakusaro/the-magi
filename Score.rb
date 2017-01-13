@@ -45,6 +45,8 @@ class Score
 
   key :locked, Boolean # Is the score not supposed to go up?
 
+  key :star, Boolean
+
   key :nf, Boolean
   Score.ensure_index(:team_id)
   Score.ensure_index(:state)

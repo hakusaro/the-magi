@@ -1,7 +1,7 @@
 require 'active_support'
 require 'active_support/core_ext'
 require 'mongo_mapper'
-require_relative 'Score'
+require_relative './Score'
 MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
 
 # File.readlines('cp8_scores/allservice_round1.txt').each do |line|
@@ -52,28 +52,37 @@ MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
 #   end
 # end
 
-File.readlines('results.csv').each do |line|
-  line_parsed = line.split ','
-  score = Score.where({:team_id => line_parsed[0]}).first
+# File.readlines('results.csv').each do |line|
+#   line_parsed = line.split ','
+#   score = Score.where({:team_id => line_parsed[0]}).first
 
-  if score != nil
-    score.r3_score = line_parsed[5].to_f
-    score.state = line_parsed[1].to_s
-    score.tier = line_parsed[2].to_s
-  else
-    score = Score.new({
-      :team_id => line_parsed[0].to_s,
-      :r3_score => line_parsed[5].to_f,
-      :state => line_parsed[1].to_s,
-      :tier => line_parsed[2].to_s,
-    })
-    puts "Created a new team #{line_parsed[0]}."
-  end
-  if score.save
-    puts "Stored #{line_parsed[0]} from open at #{line_parsed[5]}."
-  else
-    puts "Failed to save #{line_parsed[0]}."
-  end
+#   if score != nil
+#     score.r3_score = line_parsed[5].to_f
+#     score.state = line_parsed[1].to_s
+#     score.tier = line_parsed[2].to_s
+#   else
+#     score = Score.new({
+#       :team_id => line_parsed[0].to_s,
+#       :r3_score => line_parsed[5].to_f,
+#       :state => line_parsed[1].to_s,
+#       :tier => line_parsed[2].to_s,
+#     })
+#     puts "Created a new team #{line_parsed[0]}."
+#   end
+#   if score.save
+#     puts "Stored #{line_parsed[0]} from open at #{line_parsed[5]}."
+#   else
+#     puts "Failed to save #{line_parsed[0]}."
+#   end
+# end
+
+File.readlines('cp9_tids.txt').each do |line|
+  score = Score.where({:team_id => line.strip}).first
+
+  next if score == nil
+
+  score.star = true
+  score.save
 end
 
 # File.readlines('cp7_r3_advancement_open.txt').each do |line|
