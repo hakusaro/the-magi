@@ -29,7 +29,7 @@ class Magi < Sinatra::Base
   end
 
   get '/stars/?' do
-    scores = Score.where({:star => true})
+    scores = Score.where({:star => true}).sort(:r3_score.desc)
     score_count = scores.count
     last_update = Score.where({:team_id => "09-0235"}).first.updated_at
     erb :div_platinum, :locals => {:last_update => last_update, :plat_slots => 0, :mst50_slots => 0, :scores => scores, :teams => score_count, :division => 'best', :state => 'all'}
